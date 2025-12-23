@@ -39,6 +39,8 @@ public class Post extends BaseIdAndTime {
 
         comments.add(postComment);
 
+        author.increaseActivityScore(1); // 댓글 작성 시 활동 점수 1점 증가
+
         return postComment;
     }
 
