@@ -1,6 +1,6 @@
 package com.back.shared.post.dto;
 
-import com.back.boundedContext.post.entity.PostComment;
+import com.back.boundedContext.post.domain.PostComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,15 +17,15 @@ public class PostCommentDto {
     private final String authorName;
     private final String content;
 
-    public PostCommentDto(PostComment post) {
+    public PostCommentDto(PostComment postComment) {
         this(
-                post.getId(),
-                post.getCreateDate(),
-                post.getModifyDate(),
-                post.getId(),
-                post.getAuthor().getId(),
-                post.getAuthor().getNickname(),
-                post.getContent()
+                postComment.getId(), // commnent id
+                postComment.getCreateDate(),
+                postComment.getModifyDate(),
+                postComment.getPost().getId(), // post id
+                postComment.getAuthor().getId(),
+                postComment.getAuthor().getNickname(),
+                postComment.getContent()
         );
     }
 }
