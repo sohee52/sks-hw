@@ -1,36 +1,35 @@
 package com.back.boundedContext.member.app;
 
 import com.back.boundedContext.member.domain.Member;
-import com.back.global.exception.DomainException;
 import com.back.boundedContext.member.out.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-public class MemberService {
+@RequiredArgsConstructor
+public class MemberFacade {
     private final MemberRepository memberRepository;
+    private final MemberJoinUseCase memberJoinUseCase;
 
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
-
+    @Transactional(readOnly = true)
     public long count() {
         return memberRepository.count(); // count는 JPARepository에서 제공하는 기본 메서드로, 총 엔티티 수를 반환합니다.
     }
 
+    @Transactional
     public Member join(String username, String password, String nickname) {
-        memberRepository.findByUsername(username).ifPresent(m -> {
-            throw new DomainException("409-1", "이미 존재하는 username 입니다."); // 프론트에서 활용할 수 있도록 적절한 코드와 메시지를 설정합니다.
-        });
-
-        return memberRepository.save(new Member(username, password, nickname)); // save는 JPARepository에서 제공하는 기본 메서드로, 엔티티를 저장합니다.
+        return memberJoinUseCase.join(username, password, nickname);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Member> findById(int id) {
         return memberRepository.findById(id);
     }
