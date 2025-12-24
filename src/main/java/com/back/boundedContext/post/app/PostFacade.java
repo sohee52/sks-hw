@@ -2,8 +2,11 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
+import com.back.boundedContext.post.out.PostMemberRepository;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.rsData.RsData;
+import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,7 @@ import java.util.Optional;
 public class PostFacade {
     private final PostRepository postRepository;
     private final PostWriteUseCase postWriteUseCase;
+    private final PostMemberRepository postMemberRepository;
 
     @Transactional(readOnly = true)
     public long count() {
@@ -29,5 +33,20 @@ public class PostFacade {
     @Transactional(readOnly = true)
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
+    }
+
+    public PostMember syncMember(MemberDto member) {
+        PostMember postMember = new PostMember(
+                member.getUsername(),
+                "",
+                member.getNickname()
+        );
+
+        // 원본 Member의 id, createDate, modifyDate 그대로 복사해서 PostMember에 설정
+        postMember.setId(member.getId());
+        postMember.setCreateDate(member.getCreateDate());
+        postMember.setModifyDate(member.getModifyDate());
+
+        return postMemberRepository.save(postMember);
     }
 }
