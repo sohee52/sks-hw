@@ -9,14 +9,17 @@ import java.time.LocalDateTime;
 public class MemberPolicy {
     private static final int PASSWORD_CHANGE_DAYS = 90;
 
+    // 비밀번호 변경이 필요한 기간을 Duration 객체로 반환
     public Duration getNeedToChangePasswordPeriod() {
         return Duration.ofDays(PASSWORD_CHANGE_DAYS);
     }
 
+    // 비밀번호 변경이 필요한 일수를 정수로 반환
     public int getNeedToChangePasswordDays() {
         return PASSWORD_CHANGE_DAYS;
     }
 
+    // 마지막으로 비밀번호가 변경된 시점을 기준으로 비밀번호 변경이 필요한지 여부를 판단
     public boolean isNeedToChangePassword(LocalDateTime lastChangedAt) {
         if (lastChangedAt == null) return true;
 
