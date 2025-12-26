@@ -27,7 +27,7 @@ public class CashDataInit {
     }
 
     @Bean
-    @Order(2)
+    @Order(2) // PostDataInit과 CashDataInit은 순서 상관없기에 둘다 @Order(2)로 설정
     public ApplicationRunner cashDataInitApplicationRunner() {
         return args -> {
             self.makeBaseCredits();

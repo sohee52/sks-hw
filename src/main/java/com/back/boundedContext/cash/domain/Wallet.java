@@ -35,30 +35,36 @@ public class Wallet extends BaseManualIdAndTime {
         return balance > 0;
     }
 
+    // 기본 메서드
     public void credit(long amount, CashLog.EventType eventType, String relTypeCode, int relId) {
         balance += amount;
 
         addCashLog(amount, eventType, relTypeCode, relId);
     }
 
+    // BaseEntity 기반 메서드
     public void credit(long amount, CashLog.EventType eventType, BaseEntity rel) {
         credit(amount, eventType, rel.getModelTypeCode(), rel.getId());
     }
 
+    // CashMember 기반 메서드
     public void credit(long amount, CashLog.EventType eventType) {
         credit(amount, eventType, holder);
     }
 
+    // 기본 메서드
     public void debit(long amount, CashLog.EventType eventType, String relTypeCode, int relId) {
         balance -= amount;
 
         addCashLog(-amount, eventType, relTypeCode, relId);
     }
 
+    // BaseEntity 기반 메서드
     public void debit(long amount, CashLog.EventType eventType, BaseEntity rel) {
         debit(amount, eventType, rel.getModelTypeCode(), rel.getId());
     }
 
+    // CashMember 기반 메서드
     public void debit(long amount, CashLog.EventType eventType) {
         debit(amount, eventType, holder);
     }

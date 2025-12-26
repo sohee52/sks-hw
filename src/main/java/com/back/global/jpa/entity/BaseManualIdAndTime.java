@@ -17,9 +17,12 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseManualIdAndTime extends BaseEntity {
     @Id
+    // PK 수동 할당
     private int id;
+
     @CreatedDate
     private LocalDateTime createDate;
+
     @LastModifiedDate
     private LocalDateTime modifyDate;
 

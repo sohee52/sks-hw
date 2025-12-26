@@ -18,7 +18,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 public abstract class BaseIdAndTime extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = IDENTITY) // PK 자동 생성
     private int id;
 
     @CreatedDate

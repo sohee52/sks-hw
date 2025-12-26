@@ -24,13 +24,19 @@ public class CashLog extends BaseIdAndTime {
 
     @Enumerated(EnumType.STRING)
     private EventType eventType;
-    private String relTypeCode;
-    private int relId;
+
+    // 어떤 도메인 객체와 연결된 이벤트인지 범용적으로 표현하기 위한 구조
+    private String relTypeCode; // 관련 대상의 종류 코드
+    private int relId; // 관련 대상의 id
+
     @ManyToOne(fetch = LAZY)
     private CashMember member;
+
     @ManyToOne(fetch = LAZY)
     private Wallet wallet;
+
     private long amount;
+
     private long balance;
 
     public CashLog(EventType eventType, String relTypeCode, int relId, CashMember member, Wallet wallet, long amount, long balance) {
